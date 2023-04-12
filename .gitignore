@@ -3,3 +3,6 @@
 
 #Pictures
 /images
+
+#Environment
+.env

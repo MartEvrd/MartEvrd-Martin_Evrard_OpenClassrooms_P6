@@ -20,7 +20,7 @@ exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then(user => {
             if (!user) {
-                return res.status(401).json({ error: 'La paire email/mdp est invalide !' });
+                return res.status(401).json({ error: 'Paire email/mdp invalide' });
             }
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
@@ -31,7 +31,7 @@ exports.login = (req, res, next) => {
                         userId: user._id,
                         token: jwt.sign(
                             { userId: user._id },
-                            'HOT_TAKES--TOKEN_IDENTIFICATION',
+                            process.env.JWT_SECRETKEY,
                             { expiresIn: '24h' }
                         )
                     });

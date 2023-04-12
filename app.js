@@ -1,15 +1,19 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+
+var dotenv = require('dotenv');
+var dotenvExpand = require('dotenv-expand');
+var myEnv = dotenv.config();
+dotenvExpand.expand(myEnv);
+
 const path = require("path");
 
 const sauceRoutes = require("./routes/sauce");
 const userRoutes = require("./routes/user");
 app.use(express.json());
 
-// TODO Intégrer les variables d'environnement pour ne pas utiliser mes infos.
-// TODO --> installer dotenv (npm) : https://www.npmjs.com/package/dotenv
-mongoose.connect('mongodb+srv://Martin_Evrard:s8JtYhSjc31N6oGu@clusterexp6.rmmzyae.mongodb.net/Hot-Takes_OCP6?retryWrites=true&w=majority',
+mongoose.connect(process.env.MONGODB_LINK,
   { useNewUrlParser: true,
     useUnifiedTopology: true,
     autoIndex: true })
